@@ -2,7 +2,7 @@ import { eq, sql } from "drizzle-orm";
 import { db } from "..";
 import { posts } from "../schema/posts";
 
-export const getAllPosts = db.select().from(posts).prepare();
+export const getPosts = db.select().from(posts).prepare();
 
 export const getPostById = db
   .select()

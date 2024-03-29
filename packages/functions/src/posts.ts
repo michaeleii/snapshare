@@ -1,43 +1,36 @@
 import { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
 
-import { posts } from "@snapshare/core/db/schema/posts";
-import { db } from "@snapshare/core/db";
-
-interface Post {
-  id: number;
-  title: string;
-  content: string;
-}
+import {
+  getPosts,
+  getPostById,
+  createPost,
+  deletePost,
+} from "@snapshare/core/db/queries/posts";
 
 const api = new Hono().basePath("/posts");
 
 api.get("/", async (c) => {
-  db.select().from(posts).then();
+  const posts = await getPosts.all();
+  return c.json({ posts });
 });
 
-api.get("/:id", (c) => {
+api.get("/:id", async (c) => {
   const id = +c.req.param("id");
-  const post = fakePosts.find((p) => p.id === id);
-  return !post ? c.json({ error: "Post not found" }, 404) : c.json(post);
+  const post = await getPostById.get({ id });
+  return post ? c.json({ post }) : c.json({ error: "Post not found" }, 404);
 });
 
 api.post("/", async (c) => {
   const body = await c.req.json();
-  const id = fakePosts.length;
-  body.id = id;
-  fakePosts.push(body);
-  return c.json(body, 201);
+  const newPost = await createPost.values(body).returning();
+  return c.json({ post: newPost }, 201);
 });
 
-api.delete("/:id", (c) => {
+api.delete("/:id", async (c) => {
   const id = +c.req.param("id");
-  const index = fakePosts.findIndex((p) => p.id === id);
-  if (index === -1) {
-    return c.json({ error: "Post not found" }, 404);
-  }
-  fakePosts.splice(index, 1);
-  return c.json({ message: "Post deleted" });
+  await deletePost.get({ id });
+  c.json({ message: "Post deleted" });
 });
 
 export const handler = handle(api);

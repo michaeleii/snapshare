@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "local:db": "turso dev --db-file dev.db",
     "db:migrate": "drizzle-kit generate:sqlite",
     "db:push": "drizzle-kit push:sqlite"
   },

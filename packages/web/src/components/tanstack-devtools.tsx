@@ -1,4 +1,5 @@
 import { Suspense, lazy } from "react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const TanStackRouterDevtools =
   process.env.NODE_ENV === "production"
@@ -15,6 +16,7 @@ const TanStackRouterDevtools =
 export default function TanStackDevTools() {
   return (
     <>
+      <ReactQueryDevtools initialIsOpen={false} />
       <Suspense fallback={null}>
         <TanStackRouterDevtools />
       </Suspense>

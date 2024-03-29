@@ -17,7 +17,7 @@ export default $config({
     // Posts
     const posts = {
       api: new sst.aws.ApiGatewayV2("SnapSharePostsApi"),
-      handler: "packages/functions/posts.handler",
+      handler: "packages/functions/src/posts.handler",
     };
     posts.api.route("GET /posts", posts.handler);
     posts.api.route("GET /posts/{id}", posts.handler);

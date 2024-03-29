@@ -7,11 +7,23 @@ interface Post {
   content: string;
 }
 
-const fakePosts: Post[] = Array.from({ length: 10 }, (_, i) => ({
-  id: i,
-  title: `Post ${i}`,
-  content: `This is the content of post ${i}`,
-}));
+const fakePosts: Post[] = [
+  {
+    id: 0,
+    title: "Hello, World!",
+    content: "This is my first post",
+  },
+  {
+    id: 1,
+    title: "Hello, Again!",
+    content: "This is my second post",
+  },
+  {
+    id: 2,
+    title: "Goodbye!",
+    content: "This is my last post",
+  },
+];
 
 const posts = new Hono().basePath("/posts");
 
@@ -25,6 +37,8 @@ posts.get("/:id", (c) => {
 
 posts.post("/", async (c) => {
   const body = await c.req.json();
+  const id = fakePosts.length;
+  body.id = id;
   fakePosts.push(body);
   return c.json(body, 201);
 });

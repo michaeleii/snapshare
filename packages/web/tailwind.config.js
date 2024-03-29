@@ -74,5 +74,5 @@ export default {
       },
     },
   },
-  plugins: [TailwindCSSAnimate()],
+  plugins: [TailwindCSSAnimate],
 };

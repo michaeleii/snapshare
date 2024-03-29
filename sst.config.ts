@@ -6,6 +6,11 @@ export default $config({
       name: "snapshare",
       removal: input?.stage === "production" ? "retain" : "remove",
       home: "aws",
+      providers: {
+        aws: {
+          region: "us-west-2",
+        },
+      },
     };
   },
   async run() {},

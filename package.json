@@ -11,5 +11,12 @@
   ],
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.4",
+    "typescript": "^5.2.2"
+  }
 }

@@ -1,41 +1,28 @@
 import { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
 
+import { posts } from "@snapshare/core/db/schema/posts";
+import { db } from "@snapshare/core/db";
+
 interface Post {
   id: number;
   title: string;
   content: string;
 }
 
-const fakePosts: Post[] = [
-  {
-    id: 0,
-    title: "Hello, World!",
-    content: "This is my first post",
-  },
-  {
-    id: 1,
-    title: "Hello, Again!",
-    content: "This is my second post",
-  },
-  {
-    id: 2,
-    title: "Goodbye!",
-    content: "This is my last post",
-  },
-];
+const api = new Hono().basePath("/posts");
 
-const posts = new Hono().basePath("/posts");
+api.get("/", async (c) => {
+  db.select().from(posts).then();
+});
 
-posts.get("/", (c) => c.json(fakePosts));
-
-posts.get("/:id", (c) => {
+api.get("/:id", (c) => {
   const id = +c.req.param("id");
   const post = fakePosts.find((p) => p.id === id);
   return !post ? c.json({ error: "Post not found" }, 404) : c.json(post);
 });
 
-posts.post("/", async (c) => {
+api.post("/", async (c) => {
   const body = await c.req.json();
   const id = fakePosts.length;
   body.id = id;
@@ -43,7 +30,7 @@ posts.post("/", async (c) => {
   return c.json(body, 201);
 });
 
-posts.delete("/:id", (c) => {
+api.delete("/:id", (c) => {
   const id = +c.req.param("id");
   const index = fakePosts.findIndex((p) => p.id === id);
   if (index === -1) {
@@ -53,4 +40,4 @@ posts.delete("/:id", (c) => {
   return c.json({ message: "Post deleted" });
 });
 
-export const handler = handle(posts);
+export const handler = handle(api);

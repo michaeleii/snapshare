@@ -1,5 +1,8 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
+import dotenv from "dotenv";
+dotenv.config();
+
 export default $config({
   app(input) {
     return {
@@ -14,10 +17,13 @@ export default $config({
     };
   },
   async run() {
+    const environment = {
+      TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
+    };
     // Posts
     const posts = {
       api: new sst.aws.ApiGatewayV2("SnapSharePostsApi"),
-      handler: "packages/functions/src/posts.handler",
+      handler: { handler: "packages/functions/src/posts.handler", environment },
     };
     posts.api.route("GET /posts", posts.handler);
     posts.api.route("GET /posts/{id}", posts.handler);

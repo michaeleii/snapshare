@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
+import { logger } from "hono/logger";
 
 import {
   getPosts,
@@ -9,6 +10,8 @@ import {
 } from "@snapshare/core/db/queries/posts";
 
 const api = new Hono().basePath("/posts");
+
+api.use(logger());
 
 api.get("/", async (c) => {
   const posts = await getPosts.all();

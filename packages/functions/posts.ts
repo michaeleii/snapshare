@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
-import { swaggerUI } from "@hono/swagger-ui";
 
 interface Post {
   id: number;
@@ -15,8 +14,6 @@ const fakePosts: Post[] = Array.from({ length: 10 }, (_, i) => ({
 }));
 
 const posts = new Hono().basePath("/posts");
-
-posts.get("/ui", swaggerUI({ url: "/doc" }));
 
 posts.get("/", (c) => c.json(fakePosts));
 

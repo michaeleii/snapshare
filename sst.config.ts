@@ -14,14 +14,14 @@ export default $config({
     };
   },
   async run() {
-    const api = new sst.aws.ApiGatewayV2("snapshare-api");
-
     // Posts
-    const postHandler = "packages/functions/posts.handler";
-    api.route("GET /posts/ui", postHandler);
-    api.route("GET /posts", postHandler);
-    api.route("GET /posts/:id", postHandler);
-    api.route("POST /posts", postHandler);
-    api.route("DELETE /posts/:id", postHandler);
+    const posts = {
+      api: new sst.aws.ApiGatewayV2("SnapSharePostsApi"),
+      handler: "packages/functions/posts.handler",
+    };
+    posts.api.route("GET /posts", posts.handler);
+    posts.api.route("GET /posts/{id}", posts.handler);
+    posts.api.route("POST /posts", posts.handler);
+    posts.api.route("DELETE /posts/{id}", posts.handler);
   },
 });

@@ -3,6 +3,15 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+interface APIOpts {
+  functionArgs: sst.aws.FunctionArgs;
+  routeArgs: sst.aws.ApiGatewayV2RouteArgs;
+}
+
+interface API {
+  posts: APIOpts;
+}
+
 export default $config({
   app(input) {
     return {
@@ -17,36 +26,43 @@ export default $config({
     };
   },
   async run() {
-    const audience = `snapshare-api-${$app.stage}`;
-    const environment = {
-      TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
-    };
+    const KindeAudience = `snapshare-api-${$app.stage}`;
 
-    interface API {
-      api: sst.aws.ApiGatewayV2;
-      functionArgs: sst.aws.FunctionArgs;
-      routeArgs: sst.aws.ApiGatewayV2RouteArgs;
-    }
-    // Posts
-    const posts: API = {
-      api: new sst.aws.ApiGatewayV2("SnapSharePostsApi"),
-      functionArgs: {
-        handler: "packages/functions/src/posts.handler",
-        environment,
-      },
-      routeArgs: {
-        auth: {
-          jwt: {
-            issuer: "https://snapshare.kinde.com",
-            audiences: [audience],
+    const api: API = {
+      posts: {
+        functionArgs: {
+          handler: "packages/functions/src/posts.handler",
+          environment: {
+            TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
+          },
+        },
+        routeArgs: {
+          auth: {
+            jwt: {
+              issuer: "https://snapshare.kinde.com",
+              audiences: [KindeAudience],
+            },
           },
         },
       },
     };
-    posts.api.route("GET /posts", posts.functionArgs, posts.routeArgs);
-    posts.api.route("GET /posts/{id}", posts.functionArgs, posts.routeArgs);
-    posts.api.route("POST /posts", posts.functionArgs, posts.routeArgs);
-    posts.api.route("DELETE /posts/{id}", posts.functionArgs, posts.routeArgs);
+
+    const postsApi = new sst.aws.ApiGatewayV2("SnapSharePostsApi");
+
+    postsApi.route("GET /posts", api.posts.functionArgs, api.posts.routeArgs);
+
+    postsApi.route(
+      "GET /posts/{id}",
+      api.posts.functionArgs,
+      api.posts.routeArgs
+    );
+    postsApi.route("POST /posts", api.posts.functionArgs, api.posts.routeArgs);
+
+    postsApi.route(
+      "DELETE /posts/{id}",
+      api.posts.functionArgs,
+      api.posts.routeArgs
+    );
 
     new sst.aws.StaticSite("SnapshareWeb", {
       path: "packages/web",
@@ -55,8 +71,8 @@ export default $config({
         output: "dist",
       },
       environment: {
-        VITE_POST_API_URL: posts.api.url,
-        VITE_KINDE_AUDIENCE: audience,
+        VITE_POST_API_URL: postsApi.url,
+        VITE_KINDE_AUDIENCE: KindeAudience,
       },
     });
   },

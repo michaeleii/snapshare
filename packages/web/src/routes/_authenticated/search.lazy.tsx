@@ -1,4 +1,4 @@
-import PostCard from "@/components/post-card";
+// import PostCard from "@/components/post-card";
 import { Input } from "@/components/ui/input";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { SearchIcon } from "lucide-react";
@@ -22,9 +22,7 @@ function Search() {
           </div>
         </form>
       </div>
-      <div className="p-6">
-        <PostCard />
-      </div>
+      <div className="p-6">{/* <PostCard /> */}</div>
     </div>
   );
 }

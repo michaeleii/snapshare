@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { KindeProvider } from "@kinde-oss/kinde-auth-react";
-import "./index.css";
 import { routeTree } from "./routeTree.gen";
+import "./index.css";
 
 const queryClient = new QueryClient();
 

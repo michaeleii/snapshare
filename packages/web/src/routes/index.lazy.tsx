@@ -2,7 +2,7 @@ import PostCard from "@/components/post-card";
 import { usePosts } from "@/hooks/usePosts";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-export const Route = createLazyFileRoute("/_authenticated/")({
+export const Route = createLazyFileRoute("/")({
   component: Index,
 });
 

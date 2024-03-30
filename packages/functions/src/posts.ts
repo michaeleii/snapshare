@@ -14,12 +14,12 @@ const api = new Hono().basePath("/posts");
 
 api.use(logger());
 
-api.get("/", authMiddleware, async (c) => {
+api.get("/", async (c) => {
   const posts = await getPosts.all();
   return c.json(posts);
 });
 
-api.get("/:id", authMiddleware, async (c) => {
+api.get("/:id", async (c) => {
   const id = +c.req.param("id");
   const post = await getPostById.get({ id });
   return post ? c.json(post) : c.json({ error: "Post not found" }, 404);
@@ -35,7 +35,7 @@ api.post("/", authMiddleware, async (c) => {
 api.delete("/:id", authMiddleware, async (c) => {
   const userId = c.var.userId;
   const id = +c.req.param("id");
-  await deletePost.execute({ id });
+  await deletePost.execute({ id, userId });
   return c.json({ message: "Post deleted" });
 });
 

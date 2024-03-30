@@ -28,13 +28,15 @@ export default $config({
   async run() {
     const KindeAudience = `snapshare-api-${$app.stage}`;
 
+    const environment = {
+      TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
+    };
+
     const api: API = {
       posts: {
         functionArgs: {
           handler: "packages/functions/src/posts.handler",
-          environment: {
-            TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
-          },
+          environment,
         },
         routeArgs: {
           auth: {
@@ -48,16 +50,9 @@ export default $config({
     };
 
     const postsApi = new sst.aws.ApiGatewayV2("SnapSharePostsApi");
-
-    postsApi.route("GET /posts", api.posts.functionArgs, api.posts.routeArgs);
-
-    postsApi.route(
-      "GET /posts/{id}",
-      api.posts.functionArgs,
-      api.posts.routeArgs
-    );
+    postsApi.route("GET /posts", api.posts.functionArgs);
+    postsApi.route("GET /posts/{id}", api.posts.functionArgs);
     postsApi.route("POST /posts", api.posts.functionArgs, api.posts.routeArgs);
-
     postsApi.route(
       "DELETE /posts/{id}",
       api.posts.functionArgs,

@@ -6,8 +6,8 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function Component() {
-  const { isAuthenticated } = useKindeAuth();
-  return isAuthenticated ? <Outlet /> : <Login />;
+  const { isAuthenticated, isLoading } = useKindeAuth();
+  return isLoading ? null : isAuthenticated ? <Outlet /> : <Login />;
 }
 
 function Login() {

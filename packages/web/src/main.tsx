@@ -24,6 +24,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <KindeProvider
+        audience={import.meta.env.VITE_KINDE_AUDIENCE}
         clientId="aab01c739c62437992236e97be0e169f"
         domain="https://snapshare.kinde.com"
         redirectUri={window.location.origin}

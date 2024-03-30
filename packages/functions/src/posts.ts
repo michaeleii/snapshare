@@ -34,15 +34,15 @@ api.post(
     "form",
     z.object({
       caption: z.string(),
+      image: z.string(),
     })
   ),
   async (c) => {
     const userId = c.var.userId;
-    const { caption } = c.req.valid("form");
-    const sampleImage =
-      "https://images.unsplash.com/photo-1560807707-8cc77767d783?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+    const { caption, image } = c.req.valid("form");
+
     const newPost = await createPost
-      .values({ caption, userId, image: sampleImage })
+      .values({ caption, userId, image })
       .returning();
     return c.json(newPost, 201);
   }
@@ -51,7 +51,7 @@ api.post(
 api.delete("/:id{[0-9]+}", authMiddleware, async (c) => {
   const userId = c.var.userId;
   const id = +c.req.param("id");
-  await deletePost.execute({ id, userId });
+  await deletePost.all({ id, userId });
   return c.json({ message: "Post deleted" });
 });
 

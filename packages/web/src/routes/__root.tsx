@@ -81,7 +81,7 @@ function RootLayout() {
           {NavLinks.map((link) => (
             <Link
               to={link.to}
-              className="flex items-center gap-3 rounded-lg px-4 py-2 text-muted-foreground transition-all hover:text-primary data-[status=active]:bg-muted data-[status=active]:text-primary"
+              className="flex items-center gap-3 rounded-lg px-4 py-2 text-muted-foreground transition-all hover:text-primary data-[status=active]:text-primary"
             >
               {link.icon.mobile}
             </Link>

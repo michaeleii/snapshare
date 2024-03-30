@@ -14,10 +14,10 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
-import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
 
 // Create Virtual Routes
 
+const AuthenticatedIndexLazyImport = createFileRoute('/_authenticated/')()
 const AuthenticatedSearchLazyImport = createFileRoute(
   '/_authenticated/search',
 )()
@@ -35,10 +35,12 @@ const AuthenticatedRoute = AuthenticatedImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
+const AuthenticatedIndexLazyRoute = AuthenticatedIndexLazyImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRoute,
-} as any)
+} as any).lazy(() =>
+  import('./routes/_authenticated/index.lazy').then((d) => d.Route),
+)
 
 const AuthenticatedSearchLazyRoute = AuthenticatedSearchLazyImport.update({
   path: '/search',
@@ -82,7 +84,7 @@ declare module '@tanstack/react-router' {
       parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/': {
-      preLoaderRoute: typeof AuthenticatedIndexImport
+      preLoaderRoute: typeof AuthenticatedIndexLazyImport
       parentRoute: typeof AuthenticatedImport
     }
   }
@@ -95,7 +97,7 @@ export const routeTree = rootRoute.addChildren([
     AuthenticatedCreateLazyRoute,
     AuthenticatedProfileLazyRoute,
     AuthenticatedSearchLazyRoute,
-    AuthenticatedIndexRoute,
+    AuthenticatedIndexLazyRoute,
   ]),
 ])
 

@@ -2,15 +2,11 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import { db } from "..";
 import { posts } from "../schema/posts";
 
-export const getPosts = db
-  .select()
-  .from(posts)
-  .orderBy(desc(posts.createdAt))
-  .prepare();
+const baseQuery = db.select().from(posts);
 
-export const getPostById = db
-  .select()
-  .from(posts)
+export const getPosts = baseQuery.orderBy(desc(posts.createdAt)).prepare();
+
+export const getPostById = baseQuery
   .where(eq(posts.id, sql.placeholder("id")))
   .prepare();
 

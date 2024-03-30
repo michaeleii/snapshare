@@ -1,9 +1,7 @@
-import TanStackDevTools from "@/components/tanstack-devtools";
+// import TanStackDevTools from "@/components/tanstack-devtools";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 
-import { Bell, Camera, Home, Search, SquarePlus } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
+import { Camera, Home, User2, SquarePlus } from "lucide-react";
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -74,6 +72,15 @@ function RootLayout() {
               ))}
             </nav>
           </div>
+          <div className="mt-auto border-t p-4">
+            <article className="flex items-center gap-2 p-4">
+              <img
+                src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                className="h-10 w-10 rounded-full object-cover"
+              />
+              <h1 className="text-lg font-bold">John Doe</h1>
+            </article>
+          </div>
         </div>
       </div>
       <div className="flex flex-col">
@@ -87,6 +94,12 @@ function RootLayout() {
               {link.icon.mobile}
             </Link>
           ))}
+          <Link
+            to="/profile"
+            className="flex items-center gap-3 rounded-lg px-4 py-2 text-muted-foreground transition-all hover:text-primary data-[status=active]:text-primary"
+          >
+            <User2 className="h-6 w-6" />
+          </Link>
         </header>
         <main className="main overflow-y-auto md:h-dvh md:max-h-dvh">
           <Outlet />

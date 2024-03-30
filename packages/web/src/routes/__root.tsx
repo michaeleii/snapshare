@@ -2,13 +2,20 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { QueryClient } from "@tanstack/react-query";
+import {
+  createRootRouteWithContext,
+  Link,
+  Outlet,
+} from "@tanstack/react-router";
 
 import { Camera, Home, User2, SquarePlus } from "lucide-react";
 
-export const Route = createRootRoute({
-  component: RootLayout,
-});
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
+  {
+    component: RootLayout,
+  },
+);
 
 interface NavLink {
   to: string;

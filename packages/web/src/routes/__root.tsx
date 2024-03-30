@@ -47,9 +47,9 @@ const NavLinks: NavLink[] = [
 
 function RootLayout() {
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    <div className="grid max-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
-        <div className="flex h-full min-h-screen flex-col gap-2">
+        <div className="flex h-screen max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
             <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
               <Camera className="h-8 w-8" />
@@ -77,7 +77,7 @@ function RootLayout() {
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="absolute bottom-0 flex h-14 w-full items-center justify-around gap-4 border-b border-t bg-muted/40 px-4 md:hidden">
+        <header className="absolute bottom-0 flex h-14 w-full items-center justify-around gap-4 border-t bg-muted px-4 md:hidden">
           {NavLinks.map((link) => (
             <Link
               to={link.to}
@@ -87,7 +87,9 @@ function RootLayout() {
             </Link>
           ))}
         </header>
-        <Outlet />
+        <main className="max-h-screen overflow-y-auto p-10">
+          <Outlet />
+        </main>
       </div>
       <TanStackDevTools />
     </div>

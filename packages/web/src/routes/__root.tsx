@@ -1,4 +1,7 @@
 // import TanStackDevTools from "@/components/tanstack-devtools";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 
 import { Camera, Home, User2, SquarePlus } from "lucide-react";
@@ -44,6 +47,7 @@ const NavLinks: NavLink[] = [
 ];
 
 function RootLayout() {
+  const { isLoading, user, login, register } = useKindeAuth();
   return (
     <div className="grid max-h-dvh w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -73,15 +77,30 @@ function RootLayout() {
             </nav>
           </div>
           <div className="mt-auto border-t p-4">
-            <Link to="/profile">
-              <article className="flex items-center gap-2 p-4">
-                <img
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-                  className="h-10 w-10 rounded-full object-cover"
-                />
-                <h1 className="text-lg font-bold">John Doe</h1>
-              </article>
-            </Link>
+            {isLoading ? (
+              <Skeleton className="flex items-center gap-2 p-4">
+                <Skeleton className="h-10 w-10 rounded-full object-cover" />
+                <Skeleton className="w-6 text-lg font-bold"></Skeleton>
+              </Skeleton>
+            ) : user ? (
+              <Link to="/profile">
+                <article className="flex items-center gap-2 p-4">
+                  <img
+                    src={
+                      user.picture ||
+                      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                    }
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                  <span className="text-lg font-bold">{user.given_name}</span>
+                </article>
+              </Link>
+            ) : (
+              <div className="flex flex-col justify-center gap-2">
+                <Button onClick={() => login()}>Login</Button>
+                <Button onClick={() => register()}>Register</Button>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -13,55 +13,79 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
 
 // Create Virtual Routes
 
-const SearchLazyImport = createFileRoute('/search')()
-const ProfileLazyImport = createFileRoute('/profile')()
-const CreateLazyImport = createFileRoute('/create')()
-const IndexLazyImport = createFileRoute('/')()
+const AuthenticatedIndexLazyImport = createFileRoute('/_authenticated/')()
+const AuthenticatedSearchLazyImport = createFileRoute(
+  '/_authenticated/search',
+)()
+const AuthenticatedProfileLazyImport = createFileRoute(
+  '/_authenticated/profile',
+)()
+const AuthenticatedCreateLazyImport = createFileRoute(
+  '/_authenticated/create',
+)()
 
 // Create/Update Routes
 
-const SearchLazyRoute = SearchLazyImport.update({
-  path: '/search',
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/search.lazy').then((d) => d.Route))
+} as any)
 
-const ProfileLazyRoute = ProfileLazyImport.update({
-  path: '/profile',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/profile.lazy').then((d) => d.Route))
-
-const CreateLazyRoute = CreateLazyImport.update({
-  path: '/create',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/create.lazy').then((d) => d.Route))
-
-const IndexLazyRoute = IndexLazyImport.update({
+const AuthenticatedIndexLazyRoute = AuthenticatedIndexLazyImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+  getParentRoute: () => AuthenticatedRoute,
+} as any).lazy(() =>
+  import('./routes/_authenticated/index.lazy').then((d) => d.Route),
+)
+
+const AuthenticatedSearchLazyRoute = AuthenticatedSearchLazyImport.update({
+  path: '/search',
+  getParentRoute: () => AuthenticatedRoute,
+} as any).lazy(() =>
+  import('./routes/_authenticated/search.lazy').then((d) => d.Route),
+)
+
+const AuthenticatedProfileLazyRoute = AuthenticatedProfileLazyImport.update({
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRoute,
+} as any).lazy(() =>
+  import('./routes/_authenticated/profile.lazy').then((d) => d.Route),
+)
+
+const AuthenticatedCreateLazyRoute = AuthenticatedCreateLazyImport.update({
+  path: '/create',
+  getParentRoute: () => AuthenticatedRoute,
+} as any).lazy(() =>
+  import('./routes/_authenticated/create.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      preLoaderRoute: typeof IndexLazyImport
+    '/_authenticated': {
+      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
-    '/create': {
-      preLoaderRoute: typeof CreateLazyImport
-      parentRoute: typeof rootRoute
+    '/_authenticated/create': {
+      preLoaderRoute: typeof AuthenticatedCreateLazyImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/profile': {
-      preLoaderRoute: typeof ProfileLazyImport
-      parentRoute: typeof rootRoute
+    '/_authenticated/profile': {
+      preLoaderRoute: typeof AuthenticatedProfileLazyImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/search': {
-      preLoaderRoute: typeof SearchLazyImport
-      parentRoute: typeof rootRoute
+    '/_authenticated/search': {
+      preLoaderRoute: typeof AuthenticatedSearchLazyImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/': {
+      preLoaderRoute: typeof AuthenticatedIndexLazyImport
+      parentRoute: typeof AuthenticatedImport
     }
   }
 }
@@ -69,10 +93,12 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
-  IndexLazyRoute,
-  CreateLazyRoute,
-  ProfileLazyRoute,
-  SearchLazyRoute,
+  AuthenticatedRoute.addChildren([
+    AuthenticatedCreateLazyRoute,
+    AuthenticatedProfileLazyRoute,
+    AuthenticatedSearchLazyRoute,
+    AuthenticatedIndexLazyRoute,
+  ]),
 ])
 
 /* prettier-ignore-end */

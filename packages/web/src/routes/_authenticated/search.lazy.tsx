@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { SearchIcon } from "lucide-react";
 
-export const Route = createLazyFileRoute("/search")({
+export const Route = createLazyFileRoute("/_authenticated/search")({
   component: Search,
 });
 

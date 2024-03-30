@@ -27,14 +27,14 @@ const NavLinks: NavLink[] = [
       desktop: <Home className="h-6 w-6" />,
     },
   },
-  {
-    to: "/search",
-    label: "Search",
-    icon: {
-      mobile: <Search className="h-6 w-6" />,
-      desktop: <Search className="h-6 w-6" />,
-    },
-  },
+  // {
+  //   to: "/search",
+  //   label: "Search",
+  //   icon: {
+  //     mobile: <Search className="h-6 w-6" />,
+  //     desktop: <Search className="h-6 w-6" />,
+  //   },
+  // },
   {
     to: "/create",
     label: "Create",
@@ -47,9 +47,9 @@ const NavLinks: NavLink[] = [
 
 function RootLayout() {
   return (
-    <div className="grid max-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    <div className="grid max-h-dvh w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
-        <div className="flex h-screen max-h-screen flex-col gap-2">
+        <div className="flex h-dvh max-h-dvh flex-col gap-2">
           <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
             <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
               <Camera className="h-8 w-8" />
@@ -80,6 +80,7 @@ function RootLayout() {
         <header className="absolute bottom-0 flex h-14 w-full items-center justify-around gap-4 border-t bg-muted px-4 md:hidden">
           {NavLinks.map((link) => (
             <Link
+              key={link.to}
               to={link.to}
               className="flex items-center gap-3 rounded-lg px-4 py-2 text-muted-foreground transition-all hover:text-primary data-[status=active]:text-primary"
             >
@@ -87,11 +88,11 @@ function RootLayout() {
             </Link>
           ))}
         </header>
-        <main className="max-h-screen overflow-y-auto p-10">
+        <main className="main overflow-y-auto md:h-dvh md:max-h-dvh">
           <Outlet />
         </main>
       </div>
-      <TanStackDevTools />
+      {/* <TanStackDevTools /> */}
     </div>
   );
 }

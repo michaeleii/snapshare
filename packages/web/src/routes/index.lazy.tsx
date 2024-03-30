@@ -7,7 +7,7 @@ export const Route = createLazyFileRoute("/")({
 
 function Index() {
   return (
-    <div className="mx-auto max-w-[468px] divide-y">
+    <div className="mx-auto max-w-[468px] divide-y px-2">
       {Array.from({ length: 10 }).map((_, i) => (
         <PostCard key={i} />
       ))}

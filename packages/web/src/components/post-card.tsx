@@ -9,7 +9,7 @@ export default function PostCard() {
         <span className="text-sm font-bold">John Doe</span>
       </div>
       <img
-        className="aspect-[4/5] max-w-[468px] rounded-md border border-black/20"
+        className="aspect-[4/5] w-full max-w-[468px] rounded-md border border-black/20"
         src="https://images.unsplash.com/photo-1560807707-8cc77767d783?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       />
       <div className="px-2 pb-6 pt-4">

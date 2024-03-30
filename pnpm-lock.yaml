@@ -36,6 +36,9 @@ importers:
 
   packages/functions:
     dependencies:
+      '@hono/zod-validator':
+        specifier: ^0.2.1
+        version: 0.2.1(hono@4.1.5)(zod@3.22.4)
       '@libsql/client':
         specifier: ^0.6.0
         version: 0.6.0
@@ -48,6 +51,9 @@ importers:
       hono:
         specifier: ^4.1.5
         version: 4.1.5
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
 
   packages/web:
     dependencies:
@@ -87,6 +93,9 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
+      hono:
+        specifier: ^4.1.5
+        version: 4.1.5
       lucide-react:
         specifier: ^0.363.0
         version: 0.363.0(react@18.2.0)
@@ -1102,6 +1111,16 @@ packages:
 
   /@floating-ui/utils@0.2.1:
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
+    dev: false
+
+  /@hono/zod-validator@0.2.1(hono@4.1.5)(zod@3.22.4):
+    resolution: {integrity: sha512-HFoxln7Q6JsE64qz2WBS28SD33UB2alp3aRKmcWnNLDzEL1BLsWfbdX6e1HIiUprHYTIXf5y7ax8eYidKUwyaA==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.19.1
+    dependencies:
+      hono: 4.1.5
+      zod: 3.22.4
     dev: false
 
   /@hookform/resolvers@3.3.4(react-hook-form@7.51.2):

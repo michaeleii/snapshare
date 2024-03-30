@@ -8,7 +8,7 @@ export default function PostCard({ post }: { post: Post }) {
           src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
           className="h-6 w-6 rounded-full object-cover"
         />
-        <span className="text-sm font-bold">John Doe</span>
+        <span className="text-sm font-bold">{post.userId}</span>
       </div>
       <img
         className="aspect-[4/5] w-full max-w-[468px] rounded-md border border-black/20"
@@ -16,8 +16,8 @@ export default function PostCard({ post }: { post: Post }) {
       />
       <div className="px-2 pb-6 pt-4">
         <div className="flex items-end gap-2">
-          <span className="text-sm font-bold">John Doe</span>
-          <span className="text-sm">{post.content}</span>
+          <span className="text-sm font-bold">{post.userId}</span>
+          <span className="text-sm">{post.caption}</span>
         </div>
       </div>
     </article>

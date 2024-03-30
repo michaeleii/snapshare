@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
+import { Route as PostIdImport } from './routes/post.$id'
 
 // Create Virtual Routes
 
@@ -61,6 +62,11 @@ const AuthenticatedCreateLazyRoute = AuthenticatedCreateLazyImport.update({
   import('./routes/_authenticated/create.lazy').then((d) => d.Route),
 )
 
+const PostIdRoute = PostIdImport.update({
+  path: '/post/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -71,6 +77,10 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated': {
       preLoaderRoute: typeof AuthenticatedImport
+      parentRoute: typeof rootRoute
+    }
+    '/post/$id': {
+      preLoaderRoute: typeof PostIdImport
       parentRoute: typeof rootRoute
     }
     '/_authenticated/create': {
@@ -97,6 +107,7 @@ export const routeTree = rootRoute.addChildren([
     AuthenticatedProfileLazyRoute,
     AuthenticatedSearchLazyRoute,
   ]),
+  PostIdRoute,
 ])
 
 /* prettier-ignore-end */

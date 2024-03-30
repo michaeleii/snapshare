@@ -15,7 +15,6 @@ function Create() {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -27,6 +26,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { X } from "lucide-react";
+import { useCreatePost } from "@/hooks/useCreatePost";
+import FormSubmitButton from "@/components/form-submit.button";
 
 const createPostFormSchema = z.object({
   caption: z.string().min(1, "Please enter a caption.").max(2200),
@@ -37,6 +38,7 @@ const createPostFormSchema = z.object({
 
 type CreatePostFormSchema = z.infer<typeof createPostFormSchema>;
 function CreatePostForm() {
+  const { createPost, isCreating } = useCreatePost();
   const form = useForm<CreatePostFormSchema>({
     resolver: zodResolver(createPostFormSchema),
     defaultValues: {
@@ -49,8 +51,12 @@ function CreatePostForm() {
   const imageRef = form.register("image");
 
   // 2. Define a submit handler.
-  function onSubmit(values: CreatePostFormSchema) {
-    console.log(values);
+  function onSubmit({ caption }: CreatePostFormSchema) {
+    createPost({
+      caption,
+      image:
+        "https://images.unsplash.com/photo-1560807707-8cc77767d783?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    });
   }
 
   return (
@@ -112,9 +118,12 @@ function CreatePostForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Submit
-        </Button>
+        <FormSubmitButton
+          disabled={isCreating}
+          loadingValue="Creating Post..."
+          value="Create"
+          className="w-full"
+        />
       </form>
     </Form>
   );

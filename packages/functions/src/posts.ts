@@ -31,7 +31,7 @@ api.post(
   "/",
   authMiddleware,
   zValidator(
-    "form",
+    "json",
     z.object({
       caption: z.string(),
       image: z.string(),
@@ -39,7 +39,7 @@ api.post(
   ),
   async (c) => {
     const userId = c.var.userId;
-    const { caption, image } = c.req.valid("form");
+    const { caption, image } = c.req.valid("json");
 
     const newPost = await createPost
       .values({ caption, userId, image })

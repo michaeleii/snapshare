@@ -12,12 +12,16 @@ function Index() {
   return (
     <div className="mx-auto max-w-[468px] divide-y px-2">
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="flex h-dvh items-center justify-center">Loading...</div>
       ) : error ? (
         <div>Error: {error.message}</div>
-      ) : posts ? (
+      ) : posts && posts.length > 0 ? (
         posts.map((post) => <PostCard key={post.id} post={post} />)
-      ) : null}
+      ) : (
+        <div className="flex h-dvh items-center justify-center">
+          No Posts yet.
+        </div>
+      )}
     </div>
   );
 }

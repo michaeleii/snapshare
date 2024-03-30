@@ -16,3 +16,5 @@ export const deletePost = db
   .delete(posts)
   .where(eq(posts.id, sql.placeholder("id")))
   .prepare();
+
+export type Post = Awaited<ReturnType<typeof getPosts.all>>[0];

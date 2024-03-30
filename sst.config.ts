@@ -21,15 +21,32 @@ export default $config({
     const environment = {
       TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
     };
+
+    interface API {
+      api: sst.aws.ApiGatewayV2;
+      functionArgs: sst.aws.FunctionArgs;
+      routeArgs: sst.aws.ApiGatewayV2RouteArgs;
+    }
     // Posts
-    const posts = {
+    const posts: API = {
       api: new sst.aws.ApiGatewayV2("SnapSharePostsApi"),
-      handler: { handler: "packages/functions/src/posts.handler", environment },
+      functionArgs: {
+        handler: "packages/functions/src/posts.handler",
+        environment,
+      },
+      routeArgs: {
+        auth: {
+          jwt: {
+            issuer: "https://snapshare.kinde.com",
+            audiences: [audience],
+          },
+        },
+      },
     };
-    posts.api.route("GET /posts", posts.handler);
-    posts.api.route("GET /posts/{id}", posts.handler);
-    posts.api.route("POST /posts", posts.handler);
-    posts.api.route("DELETE /posts/{id}", posts.handler);
+    posts.api.route("GET /posts", posts.functionArgs, posts.routeArgs);
+    posts.api.route("GET /posts/{id}", posts.functionArgs, posts.routeArgs);
+    posts.api.route("POST /posts", posts.functionArgs, posts.routeArgs);
+    posts.api.route("DELETE /posts/{id}", posts.functionArgs, posts.routeArgs);
 
     new sst.aws.StaticSite("SnapshareWeb", {
       path: "packages/web",

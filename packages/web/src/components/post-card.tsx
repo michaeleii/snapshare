@@ -1,4 +1,6 @@
-export default function PostCard() {
+import { Post } from "@core/db/queries/posts";
+
+export default function PostCard({ post }: { post: Post }) {
   return (
     <article>
       <div className="mb-2 mt-6 flex items-start gap-2">
@@ -15,7 +17,7 @@ export default function PostCard() {
       <div className="px-2 pb-6 pt-4">
         <div className="flex items-end gap-2">
           <span className="text-sm font-bold">John Doe</span>
-          <span className="text-sm">This is a cute dog.</span>
+          <span className="text-sm">{post.content}</span>
         </div>
       </div>
     </article>

@@ -73,13 +73,15 @@ function RootLayout() {
             </nav>
           </div>
           <div className="mt-auto border-t p-4">
-            <article className="flex items-center gap-2 p-4">
-              <img
-                src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-                className="h-10 w-10 rounded-full object-cover"
-              />
-              <h1 className="text-lg font-bold">John Doe</h1>
-            </article>
+            <Link to="/profile">
+              <article className="flex items-center gap-2 p-4">
+                <img
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+                <h1 className="text-lg font-bold">John Doe</h1>
+              </article>
+            </Link>
           </div>
         </div>
       </div>

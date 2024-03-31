@@ -63,7 +63,7 @@ export default $config({
       path: "packages/web",
       build: {
         command: "npm run build",
-        output: "dist",
+        output: "packages/web/dist",
       },
       environment: {
         VITE_POST_API_URL: postsApi.url,

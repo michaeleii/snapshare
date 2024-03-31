@@ -56,8 +56,8 @@ function CreatePostForm() {
   const imageRef = form.register("image");
 
   // 2. Define a submit handler.
-  function onSubmit({ caption, image }: CreatePostFormSchema) {
-    createPost({
+  async function onSubmit({ caption, image }: CreatePostFormSchema) {
+    await createPost({
       caption,
       image: image[0],
     });

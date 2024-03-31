@@ -47,7 +47,6 @@ export function useCreatePost() {
       }
 
       const { url }: { url: string } = await signedURLResponse.json();
-      console.log({ url });
       await fetch(url, {
         method: "PUT",
         headers: {

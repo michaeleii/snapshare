@@ -35,13 +35,18 @@ export default $config({
     const authHandler = "src/functions/auth.handler";
     const s3Handler = "src/functions/s3.handler";
 
-    const assetsBucket = new sst.aws.Bucket("SnapshareAssets");
+    const assetsBucket = new sst.aws.Bucket("SnapshareAssets", {
+      public: true,
+    });
 
     const api = new sst.aws.ApiGatewayV2("SnapShareApi");
 
     api.route("GET /posts", { handler: postHandler, environment });
+
     api.route("GET /posts/{id}", { handler: postHandler, environment });
+
     api.route("POST /posts", { handler: postHandler, environment }, { auth });
+
     api.route(
       "DELETE /posts/{id}",
       { handler: postHandler, environment },
@@ -52,20 +57,15 @@ export default $config({
       handler: authHandler,
       environment,
     });
+
     api.route(
       "POST /signed-url",
       {
-        handler: "src/functions/s3.handler",
+        link: [assetsBucket],
+        handler: s3Handler,
         environment: {
           TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
         },
-        link: [assetsBucket],
-        // permissions: [
-        //   {
-        //     actions: ["s3:PutObject", "s3:Abort"],
-        //     resources: [assetsBucket.arn],
-        //   },
-        // ],
       },
       { auth },
     );

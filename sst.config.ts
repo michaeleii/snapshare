@@ -38,31 +38,33 @@ export default $config({
 
     const assetsBucket = new sst.aws.Bucket("SnapshareAssets");
 
-    const api = new sst.aws.ApiGatewayV2("SnapShareApi")
-      .route("GET /posts", { handler: postHandler, environment })
-      .route("GET /posts/{id}", { handler: postHandler, environment })
-      .route("POST /posts", { handler: postHandler, environment }, routeArgs)
-      .route(
-        "DELETE /posts/{id}",
-        { handler: postHandler, environment },
-        routeArgs
-      )
-      .route("POST /register", {
-        handler: authHandler,
-        environment,
-      })
-      .route(
-        "POST /signed-url",
-        {
-          handler: s3Handler,
-          environment: {
-            TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
-            BUCKET_NAME: assetsBucket.name,
-          },
-          link: [assetsBucket],
+    const api = new sst.aws.ApiGatewayV2("SnapShareApi");
+
+    api.route("GET /posts", { handler: postHandler, environment });
+    api.route("GET /posts/{id}", { handler: postHandler, environment });
+    api.route("POST /posts", { handler: postHandler, environment }, routeArgs);
+    api.route(
+      "DELETE /posts/{id}",
+      { handler: postHandler, environment },
+      routeArgs
+    );
+
+    api.route("POST /register", {
+      handler: authHandler,
+      environment,
+    });
+    api.route(
+      "POST /signed-url",
+      {
+        handler: s3Handler,
+        environment: {
+          TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
+          BUCKET_NAME: assetsBucket.name,
         },
-        routeArgs
-      );
+        link: [assetsBucket],
+      },
+      routeArgs
+    );
 
     new sst.aws.StaticSite("SnapshareWeb", {
       path: "packages/web",

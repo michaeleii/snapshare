@@ -3,7 +3,7 @@ import { handle } from "hono/aws-lambda";
 import { logger } from "hono/logger";
 import { authMiddleware } from "@snapshare/core/middlewares/auth";
 
-import { randomBytes } from "crypto";
+import * as crypto from "crypto";
 
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
@@ -15,7 +15,8 @@ const api = new Hono();
 
 const s3 = new S3Client({});
 
-const randomString = (length: number) => randomBytes(length).toString("hex");
+const randomString = (length: number) =>
+  crypto.randomBytes(length).toString("hex");
 
 api.use(logger());
 
@@ -31,7 +32,6 @@ api.post(
     })
   ),
   async (c) => {
-    const userId = +c.var.userId;
     const { contentType, contentLength, checksum } = c.req.valid("json");
 
     if (contentLength > 1024 * 1024 * 10) {

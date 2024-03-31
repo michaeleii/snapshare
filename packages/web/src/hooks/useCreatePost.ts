@@ -43,11 +43,23 @@ export function useCreatePost() {
         },
       );
       if (!signedURLResponse.ok) {
-        throw new Error("An error occurred while creating expense");
+        throw new Error("An error occurred while creating post");
       }
 
       const { url }: { url: string } = await signedURLResponse.json();
-      console.log(url);
+
+      await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": image.type,
+        },
+        body: image,
+      });
+
+      const imageURL = url.split("?")[0];
+
+      console.log({ imageURL });
+
       // await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
       //   method: "POST",
       //   headers: {

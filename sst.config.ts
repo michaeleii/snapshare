@@ -1,11 +1,11 @@
 import { SSTConfig } from "sst";
-import { API } from "./stacks/APIStack";
+import { API } from "./stacks/API";
 
 export default {
   config(_input) {
     return {
       name: "snapshare",
-      region: "us-east-1",
+      region: "us-west-2",
     };
   },
   stacks(app) {

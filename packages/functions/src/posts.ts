@@ -12,6 +12,10 @@ import {
 
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
+import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { db } from "@snapshare/core/db";
+import { posts } from "@snapshare/core/db/schema/posts";
+import { and, eq } from "drizzle-orm";
 
 const api = new Hono().basePath("/posts");
 
@@ -50,11 +54,38 @@ api.post(
   }
 );
 
+const s3 = new S3Client({});
+
 api.delete("/:id{[0-9]+}", authMiddleware, async (c) => {
   const userId = +c.var.userId;
   const id = +c.req.param("id");
 
-  await deletePost.all({ id, userId });
+  const post = await getPostById.get({ id });
+
+  if (!post) {
+    return c.json({ error: "Post not found" }, 400);
+  }
+
+  if (post.user.id !== userId) {
+    return c.json({ error: "You don't have permission to delete this" }, 403);
+  }
+
+  const deletedPost = await db
+    .delete(posts)
+    .where(and(eq(posts.id, id), eq(posts.userId, userId)))
+    .returning()
+    .then((p) => p[0]);
+
+  if (!deletedPost) {
+    return c.json({ error: "Error deleting the post" }, 500);
+  }
+
+  const deleteCommand = new DeleteObjectCommand({
+    Bucket: process.env.BUCKET_NAME,
+    Key: deletedPost.image.split("/").pop(),
+  });
+
+  await s3.send(deleteCommand);
 
   return c.json({ message: "Post deleted" });
 });

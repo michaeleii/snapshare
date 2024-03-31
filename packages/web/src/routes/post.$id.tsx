@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useDeletePost } from "@/hooks/useDeletePost";
 import { postQueryOptions } from "@/queries/posts/post.QueryOptions";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import {
   useQueryErrorResetBoundary,
   useSuspenseQuery,
@@ -54,6 +55,7 @@ export function PostErrorComponent({ error }: ErrorComponentProps) {
 }
 
 function PostComponent() {
+  const { user } = useKindeAuth();
   const id = Route.useParams().id;
   const { data: post } = useSuspenseQuery(postQueryOptions(id));
 
@@ -71,9 +73,11 @@ function PostComponent() {
           <span className="text-sm font-bold">
             {post.user?.firstName} {post.user?.lastName}
           </span>
-          <div className="ml-auto">
-            <UserActions />
-          </div>
+          {user?.id && post.user.kindeId === user.id && (
+            <div className="ml-auto">
+              <UserActions />
+            </div>
+          )}
         </div>
         <img
           className="aspect-[4/5] w-full max-w-[468px] rounded-md rounded-b-none border border-black/20 md:rounded-r-none"

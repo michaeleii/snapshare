@@ -11,6 +11,7 @@ const baseQuery = db
     createdAt: posts.createdAt,
     user: {
       id: users.id,
+      kindeId: users.kindeId,
       avatar: users.avatar,
       firstName: users.firstName,
       lastName: users.lastName,
@@ -18,7 +19,7 @@ const baseQuery = db
     },
   })
   .from(posts)
-  .leftJoin(users, eq(users.id, posts.userId));
+  .innerJoin(users, eq(users.id, posts.userId));
 
 export const getPosts = baseQuery.orderBy(desc(posts.createdAt)).prepare();
 
@@ -27,15 +28,5 @@ export const getPostById = baseQuery
   .prepare();
 
 export const createPost = db.insert(posts);
-
-export const deletePost = db
-  .delete(posts)
-  .where(
-    and(
-      eq(posts.id, sql.placeholder("id")),
-      eq(posts.userId, sql.placeholder("userId"))
-    )
-  )
-  .prepare();
 
 export type Post = Awaited<ReturnType<typeof getPosts.all>>[0];

@@ -68,6 +68,7 @@ function CreatePostForm() {
             <X
               className="absolute right-2 top-1 cursor-pointer text-red-500 animate-in"
               onClick={() => {
+                URL.revokeObjectURL(filePreviewURL);
                 setFilePreviewURL(undefined);
                 form.resetField("image");
               }}

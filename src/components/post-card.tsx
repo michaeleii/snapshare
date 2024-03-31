@@ -1,4 +1,4 @@
-import { Post } from "@core/db/queries/posts";
+import { Post } from "@/db/queries/posts";
 import { Link } from "@tanstack/react-router";
 
 export default function PostCard({ post }: { post: Post }) {

@@ -1,18 +1,17 @@
 import { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
 import { logger } from "hono/logger";
-import { authMiddleware } from "@core/middlewares/auth";
+import { authMiddleware } from "@/middlewares/auth";
 
 import {
   getPosts,
   getPostById,
   createPost,
   deletePost,
-} from "@core/db/queries/posts";
+} from "@/db/queries/posts";
 
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-
 
 const api = new Hono().basePath("/posts");
 
@@ -37,7 +36,7 @@ api.post(
     z.object({
       caption: z.string(),
       image: z.string(),
-    })
+    }),
   ),
   async (c) => {
     const userId = +c.var.userId;
@@ -48,7 +47,7 @@ api.post(
       .returning();
 
     return c.json(newPost, 201);
-  }
+  },
 );
 
 api.delete("/:id{[0-9]+}", authMiddleware, async (c) => {

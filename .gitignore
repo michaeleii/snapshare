@@ -25,3 +25,6 @@ dist-ssr
 
 #sst
 .sst
+
+# Local development
+*.db*

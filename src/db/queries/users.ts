@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { db } from "..";
-import { users } from "../schema/users";
+import { db } from "@/db";
+import { users } from "@/db/schema/users";
 import { sql } from "drizzle-orm";
 
 export const getUser = db

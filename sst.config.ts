@@ -67,10 +67,9 @@ export default $config({
     );
 
     new sst.aws.StaticSite("SnapshareWeb", {
-      path: "packages/web",
       build: {
         command: "npm run build",
-        output: "packages/web/dist",
+        output: "dist",
       },
       environment: {
         VITE_API_URL: api.url,

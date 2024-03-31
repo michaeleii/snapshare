@@ -8,8 +8,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@core": path.resolve(__dirname, "../../core/src"),
-      "@functions": path.resolve(__dirname, "../../functions/src"),
+      "@core": path.resolve(__dirname, "./aws/core/src"),
+      "@functions": path.resolve(__dirname, "./aws/functions/src"),
     },
   },
 });

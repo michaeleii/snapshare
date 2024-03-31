@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
 import { logger } from "hono/logger";
-import { authMiddleware } from "@snapshare/core/middlewares/auth";
+import { authMiddleware } from "@core/middlewares/auth";
 
 import * as crypto from "crypto";
 

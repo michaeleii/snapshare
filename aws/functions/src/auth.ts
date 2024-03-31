@@ -4,8 +4,8 @@ import { logger } from "hono/logger";
 
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-import { db } from "@snapshare/core/db";
-import { users } from "@snapshare/core/db/schema/users";
+import { db } from "@core/db";
+import { users } from "@core/db/schema/users";
 import { eq } from "drizzle-orm";
 
 const api = new Hono();

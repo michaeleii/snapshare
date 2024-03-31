@@ -77,7 +77,7 @@ function PostComponent() {
         </div>
         <img
           className="aspect-[4/5] w-full max-w-[468px] rounded-md rounded-b-none border border-black/20 md:rounded-r-none"
-          src="https://images.unsplash.com/photo-1560807707-8cc77767d783?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src={post.image}
         />
         <div className="w-[300px] rounded-r-md md:border">
           <div className="hidden items-center gap-2 border-b p-4 md:flex">

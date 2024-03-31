@@ -34,7 +34,7 @@ api.post(
   async (c) => {
     const { contentType, contentLength, checksum } = c.req.valid("json");
 
-    if (contentLength > 1024 * 1024 * 10) {
+    if (contentLength > 1024 * 1024 * 10 * 10) {
       return c.json({ error: "File is too large" }, 400);
     }
     const imageName = randomString(16);

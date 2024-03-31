@@ -6,7 +6,7 @@ export function useDeletePost() {
   const { getToken } = useKindeAuth();
   const navigate = useNavigate();
   const { mutate, error, isPending } = useMutation({
-    mutationFn: async (id: number) => {
+    mutationFn: async (id: string) => {
       const token = await getToken();
       if (!token) {
         throw new Error("No token found.");

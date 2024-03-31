@@ -4,7 +4,11 @@
   "type": "module",
   "scripts": {
     "test": "sst bind vitest",
-    "typecheck": "tsc -noEmit"
+    "typecheck": "tsc -noEmit",
+    "db": "turso dev --db-file dev.db",
+    "db:migrate": "drizzle-kit generate:sqlite",
+    "db:push": "drizzle-kit push:sqlite",
+    "studio": "drizzle-kit studio"
   },
   "devDependencies": {
     "@types/node": "^20.12.2",

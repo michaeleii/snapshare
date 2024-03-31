@@ -1,9 +1,12 @@
 import { StackContext, Api, StaticSite, Bucket } from "sst/constructs";
 
 export function API({ stack }: StackContext) {
-  const postHandler = "src/functions/posts.handler";
-  const authHandler = "src/functions/auth.handler";
-  const s3Handler = "src/functions/s3.handler";
+  const functionsDir = "packages/functions/src";
+
+  const postHandler = `${functionsDir}/posts.handler`;
+  const authHandler = `${functionsDir}/auth.handler`;
+  const s3Handler = `${functionsDir}/s3.handler`;
+
   const KindeAudience = `snapshare-api-${stack.stage}`;
 
   const imageUploadsBucket = new Bucket(stack, "images");
@@ -35,10 +38,17 @@ export function API({ stack }: StackContext) {
       },
       "POST /posts": postHandler,
       "DELETE /posts/{id}": postHandler,
-      "POST /register": authHandler,
-      "POST /signed-url": {
+      "POST /register": {
         authorizer: "none",
-        function: { handler: s3Handler },
+        function: { handler: authHandler },
+      },
+      "POST /signed-url": {
+        function: {
+          environment: {
+            BUCKET_NAME: imageUploadsBucket.bucketName,
+          },
+          handler: s3Handler,
+        },
       },
     },
   });

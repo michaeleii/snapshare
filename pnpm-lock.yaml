@@ -66,6 +66,9 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.2.1
         version: 0.2.1(hono@4.1.7)(zod@3.22.4)
+      '@libsql/linux-x64-gnu':
+        specifier: ^0.3.10
+        version: 0.3.10
       drizzle-orm:
         specifier: ^0.30.6
         version: 0.30.6(@aws-sdk/client-rds-data@3.540.0)(@libsql/client@0.6.0)(kysely@0.25.0)(react@18.2.0)
@@ -3052,7 +3055,6 @@ packages:
     os: [linux]
     requiresBuild: true
     dev: false
-    optional: true
 
   /@libsql/linux-x64-musl@0.3.10:
     resolution: {integrity: sha512-kNmIRxomVwt9S+cLyYS497F/3gXFF4r8wW12YSBQgxG75JYft07AHVd8J7HINg+oqRkLzT0s+mVX5dM6nk68EQ==}

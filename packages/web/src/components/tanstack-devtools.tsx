@@ -18,7 +18,7 @@ export default function TanStackDevTools() {
     <>
       <ReactQueryDevtools initialIsOpen={false} />
       <Suspense fallback={null}>
-        <TanStackRouterDevtools />
+        <TanStackRouterDevtools position="top-right" />
       </Suspense>
     </>
   );

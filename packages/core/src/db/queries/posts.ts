@@ -1,4 +1,4 @@
-import { and, desc, eq, sql } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { db } from "..";
 import { posts } from "../schema/posts";
 import { users } from "../schema/users";

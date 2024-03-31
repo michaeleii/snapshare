@@ -58,16 +58,14 @@ export function useCreatePost() {
 
       const imageURL = url.split("?")[0];
 
-      console.log({ imageURL });
-
-      // await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
-      //   method: "POST",
-      //   headers: {
-      //     Authorization: token,
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ caption, image }),
-      // });
+      await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ caption, image: imageURL }),
+      });
     },
     onSuccess: () => {
       navigate({ to: "/" });

@@ -30,7 +30,7 @@ api.post(
       .select()
       .from(users)
       .where(eq(users.kindeId, user.kindeId));
-    if (!existingUser) {
+    if (existingUser) {
       return c.status(204);
     }
     await db.insert(users).values({

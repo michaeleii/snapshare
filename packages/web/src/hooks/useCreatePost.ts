@@ -2,6 +2,16 @@ import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 
+const computeSHA256 = async (file: File) => {
+  const buffer = await file.arrayBuffer();
+  const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  return hashHex;
+};
+
 export function useCreatePost() {
   const { getToken } = useKindeAuth();
   const navigate = useNavigate({ from: "/create" });
@@ -17,14 +27,35 @@ export function useCreatePost() {
       if (!token) {
         throw new Error("No token found.");
       }
-      await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
-        method: "POST",
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
+      const signedURLResponse = await fetch(
+        `${import.meta.env.VITE_API_URL}/signed-url`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            contentType: image.type,
+            contentLength: image.size,
+            checksum: computeSHA256(image),
+          }),
         },
-        body: JSON.stringify({ caption, image }),
-      });
+      );
+      if (!signedURLResponse.ok) {
+        throw new Error("An error occurred while creating expense");
+      }
+
+      const { url }: { url: string } = await signedURLResponse.json();
+      console.log(url);
+      // await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
+      //   method: "POST",
+      //   headers: {
+      //     Authorization: token,
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ caption, image }),
+      // });
     },
     onSuccess: () => {
       navigate({ to: "/" });

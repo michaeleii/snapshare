@@ -59,6 +59,8 @@ export default $config({
       api.posts.routeArgs
     );
 
+    postsApi.route("POST /posts/auth", api.posts.functionArgs);
+
     new sst.aws.StaticSite("SnapshareWeb", {
       path: "packages/web",
       build: {

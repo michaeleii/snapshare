@@ -38,6 +38,25 @@ if (!rootElement.innerHTML) {
         domain="https://snapshare.kinde.com"
         redirectUri={window.location.origin}
         logoutUri={window.location.origin}
+        onRedirectCallback={async (user) => {
+          const newUser = {
+            kindeId: user.id,
+            avatar:
+              user.picture ??
+              "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+            email: user.email,
+            firstName: user.given_name,
+            lastName: user.family_name,
+          };
+
+          await fetch(`${import.meta.env.VITE_POST_API_URL}/auth`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUser),
+          });
+        }}
       >
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />

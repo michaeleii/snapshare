@@ -23,12 +23,12 @@ type AuthEnv = {
 import { getUser } from "../db/queries/users";
 
 export const authMiddleware = createMiddleware<AuthEnv>(async (c, next) => {
-  const userId = c.env.event.requestContext.authorizer?.jwt?.claims?.sub;
-  if (!userId) {
+  const kindeId = c.env.event.requestContext.authorizer?.jwt?.claims?.sub;
+  if (!kindeId) {
     return c.json({ error: "Unauthorized" }, 401);
   }
 
-  const user = await getUser.get({ id: userId });
+  const user = await getUser.get({ kindeId });
 
   if (!user) {
     return c.json({ error: "Invalid User" }, 401);

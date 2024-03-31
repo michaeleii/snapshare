@@ -6,5 +6,5 @@ import { sql } from "drizzle-orm";
 export const getUser = db
   .select()
   .from(users)
-  .where(eq(users.kindeId, sql.placeholder("id")))
+  .where(eq(users.kindeId, sql.placeholder("kindeId")))
   .prepare();

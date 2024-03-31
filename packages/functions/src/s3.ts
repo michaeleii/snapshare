@@ -49,7 +49,7 @@ api.post(
       ChecksumSHA256: checksum,
     });
 
-    const url = getSignedUrl(s3, putCommand, { expiresIn: 60 * 50 });
+    const url = await getSignedUrl(s3, putCommand, { expiresIn: 60 * 50 });
     return c.json({ url });
   }
 );

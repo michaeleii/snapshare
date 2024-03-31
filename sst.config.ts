@@ -56,6 +56,7 @@ export default $config({
         {
           handler: s3Handler,
           environment: {
+            TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
             BUCKET_NAME: assetsBucket.name,
           },
           link: [assetsBucket],

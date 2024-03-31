@@ -38,7 +38,7 @@ export function useCreatePost() {
           body: JSON.stringify({
             contentType: image.type,
             contentLength: image.size,
-            checksum: computeSHA256(image),
+            checksum: await computeSHA256(image),
           }),
         },
       );

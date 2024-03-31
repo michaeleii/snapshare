@@ -1,4 +1,4 @@
-import { Post } from "@/db/queries/posts";
+import { Post } from "@core/db/queries/posts";
 
 export const fetchPosts = async () => {
   const res = await fetch(`${import.meta.env.VITE_API_URL}/posts`);

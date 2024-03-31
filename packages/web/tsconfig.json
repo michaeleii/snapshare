@@ -29,9 +29,9 @@
   "include": [
     "src",
     "src/client.ts",
-    "queries/post.QueryOptions.ts",
-    "queries/posts.QueryOptions.ts",
-    "queries/posts.ts"
+    "src/queries/post.QueryOptions.ts",
+    "src/queries/posts.QueryOptions.ts",
+    "src/queries/posts.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -23,42 +23,45 @@ export default $config({
       TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
     };
 
-    const apiOpts = {
-      posts: {
-        functionArgs: {
-          handler: "packages/functions/src/posts.handler",
-          environment,
-        },
-      },
-      routeArgs: {
-        auth: {
-          jwt: {
-            issuer: "https://snapshare.kinde.com",
-            audiences: [KindeAudience],
-          },
+    const routeArgs = {
+      auth: {
+        jwt: {
+          issuer: "https://snapshare.kinde.com",
+          audiences: [KindeAudience],
         },
       },
     };
 
+    const postHandler = "packages/functions/src/posts.handler";
+    const authHandler = "packages/functions/src/auth.handler";
+    const s3Handler = "packages/functions/src/s3.handler";
+
     const assetsBucket = new sst.aws.Bucket("SnapshareAssets");
 
-    const api = new sst.aws.ApiGatewayV2("SnapShareApi");
-    api.route("GET /posts", apiOpts.posts.functionArgs);
-    api.route("GET /posts/{id}", apiOpts.posts.functionArgs);
-    api.route("POST /posts", apiOpts.posts.functionArgs, apiOpts.routeArgs);
-    api.route(
-      "DELETE /posts/{id}",
-      apiOpts.posts.functionArgs,
-      apiOpts.routeArgs
-    );
-
-    api.route("POST /register", "packages/functions/src/auth.handler");
-
-    api.route(
-      "POST /signed-url",
-      "packages/functions/src/s3.handler",
-      apiOpts.routeArgs
-    );
+    const api = new sst.aws.ApiGatewayV2("SnapShareApi")
+      .route("GET /posts", { handler: postHandler, environment })
+      .route("GET /posts/{id}", { handler: postHandler, environment })
+      .route("POST /posts", { handler: postHandler, environment }, routeArgs)
+      .route(
+        "DELETE /posts/{id}",
+        { handler: postHandler, environment },
+        routeArgs
+      )
+      .route("POST /register", {
+        handler: authHandler,
+        environment,
+      })
+      .route(
+        "POST /signed-url",
+        {
+          handler: s3Handler,
+          environment: {
+            BUCKET_NAME: assetsBucket.name,
+          },
+          link: [assetsBucket],
+        },
+        routeArgs
+      );
 
     new sst.aws.StaticSite("SnapshareWeb", {
       path: "packages/web",

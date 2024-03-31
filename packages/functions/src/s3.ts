@@ -3,14 +3,19 @@ import { handle } from "hono/aws-lambda";
 import { logger } from "hono/logger";
 import { authMiddleware } from "@snapshare/core/middlewares/auth";
 
+import { randomBytes } from "crypto";
+
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 
-import { Resource } from "sst";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const api = new Hono();
+
+const s3 = new S3Client({});
+
+const randomString = (length: number) => randomBytes(length).toString("hex");
 
 api.use(logger());
 
@@ -20,16 +25,32 @@ api.post(
   zValidator(
     "json",
     z.object({
-      caption: z.string(),
-      image: z.string(),
+      contentType: z.string(),
+      contentLength: z.number(),
+      checksum: z.string(),
     })
   ),
   async (c) => {
     const userId = +c.var.userId;
-    const { caption, image } = c.req.valid("json");
-    // generate a s3 signed url
+    const { contentType, contentLength, checksum } = c.req.valid("json");
 
-    return c.json({}, 201);
+    if (contentLength > 1024 * 1024 * 10) {
+      return c.json({ error: "File is too large" }, 400);
+    }
+
+    const imageName = randomString(16);
+    // generate a s3 signed url
+    const putCommand = new PutObjectCommand({
+      ACL: "public-read",
+      Bucket: process.env.BUCKET_NAME,
+      Key: imageName,
+      ContentType: contentType,
+      ContentLength: contentLength,
+      ChecksumSHA256: checksum,
+    });
+
+    const url = getSignedUrl(s3, putCommand, { expiresIn: 60 * 50 });
+    return c.json({ url });
   }
 );
 

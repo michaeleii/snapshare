@@ -76,7 +76,7 @@ api.post(
   ),
   async (c) => {
     const user = c.req.valid("json");
-    const existingUser = db
+    const existingUser = await db
       .select()
       .from(users)
       .where(eq(users.kindeId, user.kindeId));

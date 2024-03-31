@@ -11,6 +11,7 @@ const baseQuery = db
     createdAt: posts.createdAt,
     user: {
       id: users.id,
+      avatar: users.avatar,
       firstName: users.firstName,
       lastName: users.lastName,
       email: users.email,

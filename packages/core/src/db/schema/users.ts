@@ -6,6 +6,7 @@ export const users = sqliteTable("users", {
   kindeId: text("kinde_id").notNull(),
   firstName: text("first_name"),
   lastName: text("last_name"),
+  avatar: text("avatar"),
   email: text("email"),
   createdAt: text("created_at")
     .default(sql`(CURRENT_TIMESTAMP)`)

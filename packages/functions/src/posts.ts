@@ -9,6 +9,7 @@ import {
   createPost,
   deletePost,
 } from "@snapshare/core/db/queries/posts";
+
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 
@@ -38,20 +39,23 @@ api.post(
     })
   ),
   async (c) => {
-    const userId = c.var.userId;
+    const userId = +c.var.userId;
     const { caption, image } = c.req.valid("json");
 
     const newPost = await createPost
       .values({ caption, userId, image })
       .returning();
+
     return c.json(newPost, 201);
   }
 );
 
 api.delete("/:id{[0-9]+}", authMiddleware, async (c) => {
-  const userId = c.var.userId;
+  const userId = +c.var.userId;
   const id = +c.req.param("id");
+
   await deletePost.all({ id, userId });
+
   return c.json({ message: "Post deleted" });
 });
 

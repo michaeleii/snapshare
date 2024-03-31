@@ -65,7 +65,9 @@ function PostComponent() {
             src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
             className="h-6 w-6 rounded-full object-cover"
           />
-          <span className="text-sm font-bold">{post.userId}</span>
+          <span className="text-sm font-bold">
+            {post.user?.firstName} {post.user?.lastName}
+          </span>
           <div className="ml-auto">
             <UserActions />
           </div>
@@ -80,7 +82,9 @@ function PostComponent() {
               src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
               className="h-6 w-6 rounded-full object-cover"
             />
-            <span className="text-sm font-bold">{post.userId}</span>
+            <span className="text-sm font-bold">
+              {post.user?.firstName} {post.user?.lastName}
+            </span>
             <div className="ml-auto">
               <UserActions />
             </div>

@@ -35,6 +35,9 @@ importers:
       '@libsql/client':
         specifier: ^0.6.0
         version: 0.6.0
+      '@libsql/linux-x64-gnu':
+        specifier: ^0.3.10
+        version: 0.3.10
       drizzle-orm:
         specifier: ^0.30.6
         version: 0.30.6(@aws-sdk/client-rds-data@3.540.0)(@libsql/client@0.6.0)(kysely@0.25.0)(react@18.2.0)

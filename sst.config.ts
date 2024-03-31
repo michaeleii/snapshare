@@ -24,12 +24,10 @@ export default $config({
       TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
     };
 
-    const routeArgs = {
-      auth: {
-        jwt: {
-          issuer: "https://snapshare.kinde.com",
-          audiences: [KindeAudience],
-        },
+    const auth = {
+      jwt: {
+        issuer: "https://snapshare.kinde.com",
+        audiences: [KindeAudience],
       },
     };
 
@@ -43,11 +41,11 @@ export default $config({
 
     api.route("GET /posts", { handler: postHandler, environment });
     api.route("GET /posts/{id}", { handler: postHandler, environment });
-    api.route("POST /posts", { handler: postHandler, environment }, routeArgs);
+    api.route("POST /posts", { handler: postHandler, environment }, { auth });
     api.route(
       "DELETE /posts/{id}",
       { handler: postHandler, environment },
-      routeArgs,
+      { auth },
     );
 
     api.route("POST /register", {
@@ -57,19 +55,19 @@ export default $config({
     api.route(
       "POST /signed-url",
       {
-        handler: s3Handler,
+        handler: "src/functions/s3.handler",
         environment: {
           TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
         },
         link: [assetsBucket],
-        permissions: [
-          {
-            actions: ["s3:PutObject", "s3:Abort"],
-            resources: [assetsBucket.arn],
-          },
-        ],
+        // permissions: [
+        //   {
+        //     actions: ["s3:PutObject", "s3:Abort"],
+        //     resources: [assetsBucket.arn],
+        //   },
+        // ],
       },
-      routeArgs,
+      { auth },
     );
 
     new sst.aws.StaticSite("SnapshareWeb", {

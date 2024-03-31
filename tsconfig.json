@@ -30,7 +30,8 @@
     "src/queries/post.QueryOptions.ts",
     "src/queries/posts.QueryOptions.ts",
     "src/queries/posts.ts",
-    "drizzle.config.ts"
+    "drizzle.config.ts",
+    "sst-env.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

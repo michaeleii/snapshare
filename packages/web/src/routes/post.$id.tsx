@@ -46,7 +46,7 @@ export function PostErrorComponent({ error }: ErrorComponentProps) {
           router.invalidate();
         }}
       >
-        retry
+        Rerty
       </Button>
       <div>An error occurred. Please Try again!</div>
     </div>

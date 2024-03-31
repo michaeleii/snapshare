@@ -1,4 +1,4 @@
-// import TanStackDevTools from "@/components/tanstack-devtools";
+import TanStackDevTools from "@/components/tanstack-devtools";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
@@ -133,7 +133,7 @@ function RootLayout() {
           <Outlet />
         </main>
       </div>
-      {/* <TanStackDevTools /> */}
+      <TanStackDevTools />
     </div>
   );
 }

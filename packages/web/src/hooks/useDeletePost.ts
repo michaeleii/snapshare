@@ -11,7 +11,7 @@ export function useDeletePost() {
       if (!token) {
         throw new Error("No token found.");
       }
-      await fetch(`${import.meta.env.VITE_POST_API_URL}/posts/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/posts/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: token,

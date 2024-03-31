@@ -17,7 +17,7 @@ export function useCreatePost() {
       if (!token) {
         throw new Error("No token found.");
       }
-      await fetch(`${import.meta.env.VITE_POST_API_URL}/posts`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
         method: "POST",
         headers: {
           Authorization: token,

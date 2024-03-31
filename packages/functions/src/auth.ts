@@ -4,8 +4,8 @@ import { logger } from "hono/logger";
 
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-import { db } from "@/db";
-import { users } from "@/db/schema/users";
+import { db } from "@snapshare/core/db";
+import { users } from "@snapshare/core/db/schema/users";
 import { eq } from "drizzle-orm";
 
 const api = new Hono();
@@ -22,7 +22,7 @@ api.post(
       email: z.string().nullable(),
       firstName: z.string().nullable(),
       lastName: z.string().nullable(),
-    }),
+    })
   ),
   async (c) => {
     const user = c.req.valid("json");
@@ -43,7 +43,7 @@ api.post(
       kindeId: user.kindeId,
     });
     return c.json({ message: "New User Created" });
-  },
+  }
 );
 
 export const handler = handle(api);

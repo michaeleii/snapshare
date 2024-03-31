@@ -64,7 +64,7 @@ export default $config({
         link: [assetsBucket],
         permissions: [
           {
-            actions: ["s3:*"],
+            actions: ["s3:PutObject", "s3:Abort"],
             resources: [assetsBucket.arn],
           },
         ],

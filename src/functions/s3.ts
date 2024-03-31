@@ -3,7 +3,7 @@ import { handle } from "hono/aws-lambda";
 import { logger } from "hono/logger";
 import { authMiddleware } from "@/middlewares/auth";
 
-import * as crypto from "crypto";
+import crypto from "crypto";
 
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";

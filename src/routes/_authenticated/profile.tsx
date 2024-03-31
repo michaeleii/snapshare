@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createLazyFileRoute("/_authenticated/profile")({
+export const Route = createFileRoute("/_authenticated/profile")({
   component: Profile,
 });
 

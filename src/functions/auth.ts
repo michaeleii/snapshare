@@ -22,7 +22,7 @@ api.post(
       email: z.string().nullable(),
       firstName: z.string().nullable(),
       lastName: z.string().nullable(),
-    })
+    }),
   ),
   async (c) => {
     const user = c.req.valid("json");
@@ -30,9 +30,11 @@ api.post(
       .select()
       .from(users)
       .where(eq(users.kindeId, user.kindeId));
-    if (existingUser) {
-      return c.status(204);
+
+    if (existingUser.at(0)) {
+      return c.json({ message: "Already registered" }, 200);
     }
+
     await db.insert(users).values({
       avatar: user.avatar,
       email: user.email,
@@ -41,7 +43,7 @@ api.post(
       kindeId: user.kindeId,
     });
     return c.json({ message: "New User Created" });
-  }
+  },
 );
 
 export const handler = handle(api);

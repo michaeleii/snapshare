@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="./.sst/platform/config.d.ts" />
 
 import dotenv from "dotenv";
@@ -32,9 +33,9 @@ export default $config({
       },
     };
 
-    const postHandler = "aws/functions/src/posts.handler";
-    const authHandler = "aws/functions/src/auth.handler";
-    const s3Handler = "aws/functions/src/s3.handler";
+    const postHandler = "src/functions/posts.handler";
+    const authHandler = "src/functions/auth.handler";
+    const s3Handler = "src/functions/s3.handler";
 
     const assetsBucket = new sst.aws.Bucket("SnapshareAssets");
 
@@ -46,7 +47,7 @@ export default $config({
     api.route(
       "DELETE /posts/{id}",
       { handler: postHandler, environment },
-      routeArgs
+      routeArgs,
     );
 
     api.route("POST /register", {
@@ -59,11 +60,16 @@ export default $config({
         handler: s3Handler,
         environment: {
           TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL!,
-          BUCKET_NAME: assetsBucket.name,
         },
         link: [assetsBucket],
+        permissions: [
+          {
+            actions: ["s3:*"],
+            resources: [assetsBucket.arn],
+          },
+        ],
       },
-      routeArgs
+      routeArgs,
     );
 
     new sst.aws.StaticSite("SnapshareWeb", {

@@ -20,7 +20,7 @@ type AuthEnv = {
     context: LambdaContext;
   };
 };
-import { getUser } from "../db/queries/users";
+import { getUser } from "@/db/queries/users";
 
 export const authMiddleware = createMiddleware<AuthEnv>(async (c, next) => {
   const kindeId = c.env.event.requestContext.authorizer?.jwt?.claims?.sub;

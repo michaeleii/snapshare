@@ -10,6 +10,7 @@ import { z } from "zod";
 
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { Resource } from "sst";
 
 const api = new Hono();
 
@@ -37,12 +38,11 @@ api.post(
     if (contentLength > 1024 * 1024 * 10) {
       return c.json({ error: "File is too large" }, 400);
     }
-
     const imageName = randomString(16);
     // generate a s3 signed url
     const putCommand = new PutObjectCommand({
       ACL: "public-read",
-      Bucket: process.env.BUCKET_NAME,
+      Bucket: Resource.SnapshareAssets.name,
       Key: imageName,
       ContentType: contentType,
       ContentLength: contentLength,

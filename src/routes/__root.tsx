@@ -35,14 +35,6 @@ const NavLinks: NavLink[] = [
       desktop: <Home className="h-6 w-6" />,
     },
   },
-  // {
-  //   to: "/search",
-  //   label: "Search",
-  //   icon: {
-  //     mobile: <Search className="h-6 w-6" />,
-  //     desktop: <Search className="h-6 w-6" />,
-  //   },
-  // },
   {
     to: "/create",
     label: "Create",
@@ -64,10 +56,6 @@ function RootLayout() {
               <Camera className="h-8 w-8" />
               <span>Snapshare</span>
             </Link>
-            {/* <Button variant="ghost" size="icon" className="ml-auto h-8 w-8">
-              <Bell className="h-4 w-4" />
-              <span className="sr-only">Toggle notifications</span>
-            </Button> */}
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">

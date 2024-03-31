@@ -1,0 +1,42 @@
+{
+    "kind": "update",
+    "startTime": 1711871615,
+    "message": "Convert to drop in mode because of monorepo problems regarding env",
+    "environment": {
+        "exec.kind": "auto.local",
+        "git.author": "Michael Lei",
+        "git.author.email": "michaelleie0ca@gmail.com",
+        "git.committer": "Michael Lei",
+        "git.committer.email": "michaelleie0ca@gmail.com",
+        "git.dirty": "true",
+        "git.head": "72e897bf5ffde105c5510e403b8d8e3744f01c85",
+        "git.headName": "refs/heads/main",
+        "pulumi.arch": "amd64",
+        "pulumi.env.PULUMI_CONFIG_PASSPHRASE": "set",
+        "pulumi.env.PULUMI_DEBUG_COMMANDS": "true",
+        "pulumi.env.PULUMI_HOME": "set",
+        "pulumi.flag.event-log": "set",
+        "pulumi.flag.exec-kind": "set",
+        "pulumi.flag.non-interactive": "true",
+        "pulumi.flag.skip-preview": "true",
+        "pulumi.flag.stack": "set",
+        "pulumi.flag.yes": "true",
+        "pulumi.os": "linux",
+        "pulumi.version": "v3.112.0",
+        "updatePlan": "false",
+        "vcs.kind": "github.com",
+        "vcs.owner": "michaeleii",
+        "vcs.repo": "snapshare",
+        "vcs.root": ".sst"
+    },
+    "config": {
+        "aws:defaultTags": "{\"tags\":{\"sst:app\":\"snapshare\",\"sst:stage\":\"michael\"}}",
+        "aws:region": "us-west-2"
+    },
+    "version": 0,
+    "result": "succeeded",
+    "endTime": 1711871620,
+    "resourceChanges": {
+        "same": 79
+    }
+}

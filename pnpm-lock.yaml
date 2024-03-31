@@ -17,6 +17,9 @@ dependencies:
   '@libsql/client':
     specifier: ^0.6.0
     version: 0.6.0
+  '@libsql/linux-x64-gnu':
+    specifier: ^0.3.10
+    version: 0.3.10
   '@radix-ui/react-dialog':
     specifier: ^1.0.5
     version: 1.0.5(@types/react-dom@18.2.23)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
@@ -2015,7 +2018,6 @@ packages:
     os: [linux]
     requiresBuild: true
     dev: false
-    optional: true
 
   /@libsql/linux-x64-musl@0.3.10:
     resolution: {integrity: sha512-kNmIRxomVwt9S+cLyYS497F/3gXFF4r8wW12YSBQgxG75JYft07AHVd8J7HINg+oqRkLzT0s+mVX5dM6nk68EQ==}

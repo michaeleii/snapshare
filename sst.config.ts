@@ -32,9 +32,9 @@ export default $config({
       },
     };
 
-    const postHandler = "packages/functions/src/posts.handler";
-    const authHandler = "packages/functions/src/auth.handler";
-    const s3Handler = "packages/functions/src/s3.handler";
+    const postHandler = "aws/functions/src/posts.handler";
+    const authHandler = "aws/functions/src/auth.handler";
+    const s3Handler = "aws/functions/src/s3.handler";
 
     const assetsBucket = new sst.aws.Bucket("SnapshareAssets");
 

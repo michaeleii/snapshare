@@ -37,7 +37,14 @@ export function API({ stack }: StackContext) {
         function: { handler: postHandler },
       },
       "POST /posts": postHandler,
-      "DELETE /posts/{id}": postHandler,
+      "DELETE /posts/{id}": {
+        function: {
+          handler: postHandler,
+          environment: {
+            BUCKET_NAME: imageUploadsBucket.bucketName,
+          },
+        },
+      },
       "POST /register": {
         authorizer: "none",
         function: { handler: authHandler },
@@ -56,6 +63,11 @@ export function API({ stack }: StackContext) {
   api.attachPermissionsToRoute("POST /signed-url", [
     imageUploadsBucket,
     "grantPut",
+  ]);
+
+  api.attachPermissionsToRoute("DELETE /posts/{id}", [
+    imageUploadsBucket,
+    "grantDelete",
   ]);
 
   const web = new StaticSite(stack, "web", {

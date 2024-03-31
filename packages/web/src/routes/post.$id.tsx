@@ -60,9 +60,12 @@ function PostComponent() {
   return (
     <div className=".main flex h-full items-center justify-center gap-2 px-2">
       <article className="flex flex-col justify-center md:flex-row">
-        <div className="mx-auto mb-2 flex w-full max-w-[468px] items-center justify-start gap-2 md:hidden">
+        <div className="mx-auto mb-2 flex w-full max-w-[468px] flex-wrap items-center justify-start gap-2 md:hidden">
           <img
-            src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+            src={
+              post.user?.avatar ||
+              "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+            }
             className="h-6 w-6 rounded-full object-cover"
           />
           <span className="text-sm font-bold">
@@ -76,10 +79,13 @@ function PostComponent() {
           className="aspect-[4/5] w-full max-w-[468px] rounded-md rounded-b-none border border-black/20 md:rounded-r-none"
           src="https://images.unsplash.com/photo-1560807707-8cc77767d783?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         />
-        <div className="w-full max-w-[468px] rounded-r-md md:w-auto md:border">
+        <div className="w-[300px] rounded-r-md md:border">
           <div className="hidden items-center gap-2 border-b p-4 md:flex">
             <img
-              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+              src={
+                post.user?.avatar ||
+                "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+              }
               className="h-6 w-6 rounded-full object-cover"
             />
             <span className="text-sm font-bold">

@@ -45,7 +45,7 @@ api.post(
     const userId = +c.var.userId;
     const { caption, image } = c.req.valid("json");
 
-    const newPost = await createPost
+    const [newPost] = await createPost
       .values({ caption, userId, image })
       .returning();
 

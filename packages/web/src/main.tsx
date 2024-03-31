@@ -49,7 +49,7 @@ if (!rootElement.innerHTML) {
             lastName: user.family_name,
           };
 
-          await fetch(`${import.meta.env.VITE_POST_API_URL}/auth`, {
+          await fetch(`${import.meta.env.VITE_POST_API_URL}/posts/auth`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

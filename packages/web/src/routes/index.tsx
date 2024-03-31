@@ -1,7 +1,7 @@
 import PostCard from "@/components/post-card";
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { postsQueryOptions } from "@/posts.QueryOptions";
+import { postsQueryOptions } from "@/queries/posts/posts.QueryOptions";
 
 export const Route = createFileRoute("/")({
   loader: ({ context: { queryClient } }) =>

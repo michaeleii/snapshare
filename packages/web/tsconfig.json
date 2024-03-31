@@ -26,6 +26,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/client.ts"],
+  "include": [
+    "src",
+    "src/client.ts",
+    "queries/post.QueryOptions.ts",
+    "queries/posts.QueryOptions.ts",
+    "queries/posts.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

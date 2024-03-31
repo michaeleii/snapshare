@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useDeletePost } from "@/hooks/useDeletePost";
-import { postQueryOptions } from "@/post.QueryOptions";
+import { postQueryOptions } from "@/queries/posts/post.QueryOptions";
 import {
   useQueryErrorResetBoundary,
   useSuspenseQuery,

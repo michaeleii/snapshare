@@ -7,7 +7,6 @@ import {
   getPosts,
   getPostById,
   createPost,
-  deletePost,
 } from "@snapshare/core/db/queries/posts";
 
 import { zValidator } from "@hono/zod-validator";

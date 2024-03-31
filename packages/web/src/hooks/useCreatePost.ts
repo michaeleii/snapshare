@@ -11,7 +11,7 @@ export function useCreatePost() {
       image,
     }: {
       caption: string;
-      image: string;
+      image: File;
     }) => {
       const token = await getToken();
       if (!token) {

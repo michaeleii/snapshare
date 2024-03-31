@@ -31,9 +31,14 @@ import FormSubmitButton from "@/components/form-submit.button";
 
 const createPostFormSchema = z.object({
   caption: z.string().min(1, "Please enter a caption.").max(2200),
-  image: z.any().refine((file) => {
-    return file instanceof FileList && file.length > 0;
-  }, "Please upload an image."),
+  // image: z.any().refine((file) => {
+  //   return file instanceof FileList && file.length > 0;
+  // }, "Please upload an image."),
+  image: z
+    .instanceof(FileList, {
+      message: "Please upload an image",
+    })
+    .refine((val) => val.length > 0, "Please upload an image"),
 });
 
 type CreatePostFormSchema = z.infer<typeof createPostFormSchema>;
@@ -51,11 +56,10 @@ function CreatePostForm() {
   const imageRef = form.register("image");
 
   // 2. Define a submit handler.
-  function onSubmit({ caption }: CreatePostFormSchema) {
+  function onSubmit({ caption, image }: CreatePostFormSchema) {
     createPost({
       caption,
-      image:
-        "https://images.unsplash.com/photo-1560807707-8cc77767d783?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image: image[0],
     });
   }
 

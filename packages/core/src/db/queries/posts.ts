@@ -1,8 +1,23 @@
 import { and, desc, eq, sql } from "drizzle-orm";
 import { db } from "..";
 import { posts } from "../schema/posts";
+import { users } from "../schema/users";
 
-const baseQuery = db.select().from(posts);
+const baseQuery = db
+  .select({
+    id: posts.id,
+    image: posts.image,
+    caption: posts.caption,
+    createdAt: posts.createdAt,
+    user: {
+      id: users.id,
+      firstName: users.firstName,
+      lastName: users.lastName,
+      email: users.email,
+    },
+  })
+  .from(posts)
+  .leftJoin(users, eq(users.id, posts.userId));
 
 export const getPosts = baseQuery.orderBy(desc(posts.createdAt)).prepare();
 

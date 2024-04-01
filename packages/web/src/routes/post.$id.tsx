@@ -55,7 +55,6 @@ export function PostErrorComponent({ error }: ErrorComponentProps) {
 }
 
 function PostComponent() {
-  const { user } = useKindeAuth();
   const id = Route.useParams().id;
   const { data: post } = useSuspenseQuery(postQueryOptions(id));
 
@@ -73,11 +72,10 @@ function PostComponent() {
           <span className="text-sm font-bold">
             {post.user?.firstName} {post.user?.lastName}
           </span>
-          {user?.id && post.user.kindeId === user.id && (
-            <div className="ml-auto">
-              <UserActions />
-            </div>
-          )}
+
+          <div className="ml-auto">
+            <UserActions />
+          </div>
         </div>
         <img
           className="aspect-[4/5] w-full max-w-[468px] rounded-md rounded-b-none border border-black/20 md:rounded-r-none"
@@ -96,7 +94,7 @@ function PostComponent() {
               {post.user?.firstName} {post.user?.lastName}
             </span>
             <div className="ml-auto">
-              <UserActions />
+              <UserActions kindeId={post.user.kindeId} />
             </div>
           </div>
 
@@ -111,9 +109,11 @@ function PostComponent() {
   );
 }
 
-function UserActions() {
+function UserActions({ kindeId }: { kindeId: string }) {
   const id = Route.useParams().id;
   const { deletePost, isDeleting } = useDeletePost();
+  const { user } = useKindeAuth();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -124,13 +124,15 @@ function UserActions() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem>Share</DropdownMenuItem>
-        <DropdownMenuItem
-          disabled={isDeleting}
-          className="text-destructive focus:bg-destructive/80 focus:text-white"
-          onClick={() => deletePost(id)}
-        >
-          Delete
-        </DropdownMenuItem>
+        {user && kindeId === user.id && (
+          <DropdownMenuItem
+            disabled={isDeleting}
+            className="text-destructive focus:bg-destructive/80 focus:text-white"
+            onClick={() => deletePost(id)}
+          >
+            Delete
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

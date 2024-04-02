@@ -6,6 +6,7 @@ export function API({ stack }: StackContext) {
   const postHandler = `${functionsDir}/posts.handler`;
   const authHandler = `${functionsDir}/auth.handler`;
   const s3Handler = `${functionsDir}/s3.handler`;
+  const csharpHandler = "packages/csharp/MinimalApi";
 
   const KindeAudience = `snapshare-api-${stack.stage}`;
 
@@ -56,6 +57,10 @@ export function API({ stack }: StackContext) {
           },
           handler: s3Handler,
         },
+      },
+      "GET /cs": {
+        authorizer: "none",
+        function: { handler: csharpHandler, runtime: "container" },
       },
     },
   });

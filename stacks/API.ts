@@ -58,10 +58,10 @@ export function API({ stack }: StackContext) {
           handler: s3Handler,
         },
       },
-      "GET /cs": {
-        authorizer: "none",
-        function: { handler: csharpHandler, runtime: "container" },
-      },
+      // "GET /cs": {
+      //   authorizer: "none",
+      //   function: { handler: csharpHandler, runtime: "container" },
+      // },
     },
   });
 

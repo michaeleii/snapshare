@@ -74,7 +74,7 @@ function PostComponent() {
           </span>
 
           <div className="ml-auto">
-            <UserActions />
+            <UserActions kindeId={post.user.kindeId} />
           </div>
         </div>
         <img

@@ -78,7 +78,7 @@ function PostComponent() {
           </div>
         </div>
         <img
-          className="aspect-[4/5] w-full max-w-[468px] rounded-md rounded-b-none border border-black/20 md:rounded-r-none"
+          className="aspect-[4/5] w-full max-w-[468px] rounded-md rounded-b-none border border-black/20 bg-black object-contain md:rounded-r-none"
           src={post.image}
         />
         <div className="w-[300px] rounded-r-md md:border">

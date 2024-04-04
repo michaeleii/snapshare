@@ -23,7 +23,7 @@ export default function PostCard({ post }: { post: Post }) {
         }}
       >
         <img
-          className="aspect-[4/5] w-full max-w-[468px] rounded-md border border-black/20"
+          className="aspect-[4/5] w-full max-w-[468px] rounded-md border border-black/20 bg-black object-contain"
           src={post.image}
         />
       </Link>

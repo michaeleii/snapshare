@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { KindeProvider } from "@kinde-oss/kinde-auth-react";
 import { routeTree } from "./routeTree.gen";
 import "./index.css";
+import { ThemeProvider } from "./components/theme-provider";
 
 const queryClient = new QueryClient();
 
@@ -32,36 +33,38 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <KindeProvider
-        audience={import.meta.env.VITE_KINDE_AUDIENCE}
-        clientId="aab01c739c62437992236e97be0e169f"
-        domain="https://snapshare.kinde.com"
-        redirectUri={window.location.origin}
-        logoutUri={window.location.origin}
-        onRedirectCallback={async (user) => {
-          const newUser = {
-            kindeId: user.id,
-            avatar:
-              user.picture ??
-              "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-            email: user.email,
-            firstName: user.given_name,
-            lastName: user.family_name,
-          };
+      <ThemeProvider defaultTheme="system">
+        <KindeProvider
+          audience={import.meta.env.VITE_KINDE_AUDIENCE}
+          clientId="aab01c739c62437992236e97be0e169f"
+          domain="https://snapshare.kinde.com"
+          redirectUri={window.location.origin}
+          logoutUri={window.location.origin}
+          onRedirectCallback={async (user) => {
+            const newUser = {
+              kindeId: user.id,
+              avatar:
+                user.picture ??
+                "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+              email: user.email,
+              firstName: user.given_name,
+              lastName: user.family_name,
+            };
 
-          await fetch(`${import.meta.env.VITE_API_URL}/register`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newUser),
-          });
-        }}
-      >
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-        </QueryClientProvider>
-      </KindeProvider>
+            await fetch(`${import.meta.env.VITE_API_URL}/register`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newUser),
+            });
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+          </QueryClientProvider>
+        </KindeProvider>
+      </ThemeProvider>
     </StrictMode>,
   );
 }

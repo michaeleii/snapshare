@@ -1,3 +1,4 @@
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import { createFileRoute } from "@tanstack/react-router";
@@ -14,6 +15,10 @@ export default function Profile() {
         Hi {user?.given_name} {user?.family_name}
       </h1>
       <p className="mb-4 text-gray-500">{user?.email}</p>
+      <div className="mb-4 flex items-center gap-2">
+        <span>Theme:</span>
+        <ModeToggle />
+      </div>
       <Button onClick={() => logout()}>Logout</Button>
     </div>
   );

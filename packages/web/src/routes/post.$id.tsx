@@ -78,7 +78,7 @@ function PostComponent() {
           </div>
         </div>
         <img
-          className="aspect-[4/5] w-full max-w-[468px] rounded-md rounded-b-none border border-black/20 bg-black object-contain md:rounded-r-none"
+          className="aspect-[4/5] w-full max-w-[468px] rounded-md rounded-b-none border border-black/20 bg-foreground object-contain md:rounded-r-none"
           src={post.image}
         />
         <div className="w-[300px] rounded-r-md md:border">
@@ -97,7 +97,6 @@ function PostComponent() {
               <UserActions kindeId={post.user.kindeId} />
             </div>
           </div>
-
           <div className="pl-2 pt-4 md:p-4">
             <div className="flex items-end gap-2">
               <span className="text-sm">{post.caption}</span>

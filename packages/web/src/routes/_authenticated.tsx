@@ -29,7 +29,7 @@ import {
 export function LoginForm() {
   const { login, register } = useKindeAuth();
   return (
-    <Card className="w-full max-w-sm border-0 md:border">
+    <Card className="w-full max-w-sm border-0 shadow-none md:border md:shadow-lg">
       <CardHeader>
         <CardTitle className="text-center text-2xl">
           Welcome to Snapshare
